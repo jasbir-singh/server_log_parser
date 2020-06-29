@@ -4,6 +4,8 @@ class ServerLogParser
   class FileNotFound < StandardError
   end
 
+  attr_reader :file_path
+
   def initialize(file_path:)
     raise FileNotFound unless File.exist?(file_path)
 
