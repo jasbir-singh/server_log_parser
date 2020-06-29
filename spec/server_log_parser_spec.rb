@@ -30,4 +30,18 @@ RSpec.describe ServerLogParser do
       end
     end
   end
+
+  describe '.parse' do
+    let(:file_path) { './spec/fixtures/webserver1.log' }
+
+    context 'when the log file is invalid' do
+      let(:file_path) { './spec/fixtures/webserver_invalid.log' }
+
+      it 'parses the file into visits' do
+        expect {
+          subject.parse
+        }.to raise_error(IPAddr::InvalidAddressError)
+      end
+    end
+  end
 end
