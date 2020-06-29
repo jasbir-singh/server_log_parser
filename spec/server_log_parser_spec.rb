@@ -4,6 +4,7 @@ require './server_log_parser'
 
 RSpec.describe ServerLogParser do
   subject { ServerLogParser.new(file_path: file_path) }
+
   describe 'constructor' do
     let(:file_path) { 'non_exisitent_file_path' }
 
@@ -18,7 +19,7 @@ RSpec.describe ServerLogParser do
     context 'when the file path is valid' do
       let(:file_path) { './spec/fixtures/webserver1.log' }
 
-      it 'sets the file_path' do
+      it 'does not raise an error' do
         expect do
           subject
         end.to_not raise_error(ServerLogParser::FileNotFound)
