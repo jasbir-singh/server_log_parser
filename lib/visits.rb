@@ -12,4 +12,10 @@ class Visits
   def add(url:, ip_address:)
     entries[url] = [*entries[url], ip_address]
   end
+
+  def each(&block)
+    @entries.each do |url, ip_addresses|
+      block.call(url: url, ip_addresses: ip_addresses)
+    end
+  end
 end
