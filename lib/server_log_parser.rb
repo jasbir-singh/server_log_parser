@@ -20,7 +20,7 @@ class ServerLogParser
       visits.add(**LogLineParser.parse(line))
     end
 
-    self
+    visits
   end
 
   def self.parse(**args)

@@ -11,11 +11,15 @@ RSpec.describe VisitReports::UniqueViewsByURL do
     end
   end
 
-  describe '#generate' do
-    subject { described_class.generate(visits) }
+  describe '#to_s' do
+    subject { described_class.new(visits: visits).to_s }
 
-    it 'returns the unique views' do
-      expect(subject).to eq({ '/about' => 1, '/about/2' => 1 })
+    it 'returns the unique views for /about page' do
+      expect(subject).to include('/about 1 unique views')
+    end
+
+    it 'returns the unique views for /about/2 page' do
+      expect(subject).to include('/about/2 1 unique views')
     end
   end
 end
