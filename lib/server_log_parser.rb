@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require './lib/visits'
+require './lib/server_log_line_parser'
 
 class ServerLogParser
   class FileNotFound < StandardError
@@ -17,7 +18,7 @@ class ServerLogParser
 
   def parse
     File.readlines(file_path).each do |line|
-      visits.add(**LogLineParser.parse(line))
+      visits.add(**ServerLogLineParser.parse(line))
     end
 
     visits
@@ -25,16 +26,5 @@ class ServerLogParser
 
   def self.parse(**args)
     new(**args).parse
-  end
-
-  class LogLineParser
-    def self.parse(line)
-      url, ip_address = line.split(' ')
-
-      {
-        url: url,
-        ip_address: ip_address
-      }
-    end
   end
 end
