@@ -1,9 +1,10 @@
 # frozen_string_literal: true
 
-require './server_log_parser'
+require './lib/server_log_parser'
 
 RSpec.describe ServerLogParser do
-  subject { ServerLogParser.new(file_path: file_path) }
+  let(:visits) { Visits.new }
+  subject { ServerLogParser.new(file_path: file_path, visits: visits) }
 
   describe 'constructor' do
     let(:file_path) { 'non_exisitent_file_path' }
@@ -22,7 +23,7 @@ RSpec.describe ServerLogParser do
       it 'does not raise an error' do
         expect do
           subject
-        end.to_not raise_error(ServerLogParser::FileNotFound)
+        end.not_to raise_error
       end
 
       it 'sets the file_path' do
@@ -32,15 +33,13 @@ RSpec.describe ServerLogParser do
   end
 
   describe '.parse' do
-    let(:file_path) { './spec/fixtures/webserver1.log' }
+    let(:file_path) { './spec/fixtures/webserver_simple.log' }
 
-    context 'when the log file is invalid' do
-      let(:file_path) { './spec/fixtures/webserver_invalid.log' }
+    context 'when the file is valid' do
+      it 'parses and then adds the visits' do
+        expect(visits).to receive(:add).with(url: '/about', ip_address: '802.683.925.780')
 
-      it 'parses the file into visits' do
-        expect {
-          subject.parse
-        }.to raise_error(IPAddr::InvalidAddressError)
+        subject.parse
       end
     end
   end
