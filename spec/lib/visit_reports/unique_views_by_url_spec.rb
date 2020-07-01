@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require './lib/visit_reports'
+require './lib/visit_reports/unique_views_by_url'
 
 RSpec.describe VisitReports::UniqueViewsByURL do
   let(:visits) do

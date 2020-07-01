@@ -1,6 +1,5 @@
 # frozen_string_literal: true
-
-require './lib/visit_reports'
+require './lib/visit_reports/total_views_by_url'
 
 RSpec.describe VisitReports::TotalViewsByURL do
   let(:visits) do
