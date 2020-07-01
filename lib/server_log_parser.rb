@@ -19,6 +19,12 @@ class ServerLogParser
     File.readlines(file_path).each do |line|
       visits.add(**LogLineParser.parse(line))
     end
+
+    self
+  end
+
+  def self.parse(**args)
+    new(**args).parse
   end
 
   class LogLineParser
