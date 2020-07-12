@@ -6,7 +6,17 @@ require './lib/visit_reports/unique_views_by_url'
 require './lib/visit_reports/total_views_by_url'
 
 if __FILE__ == $PROGRAM_NAME
-  visits = ServerLogParser.parse(file_path: ARGV[0])
+  if !ARGV[0]
+    puts "usage: ./parser.rb [file...]"
+    return
+  end
+
+  begin
+    visits = ServerLogParser.parse(file_path: ARGV[0])
+  rescue ServerLogParser::FileNotFound
+    puts 'File not found :('
+    return
+  end
 
   puts '-' * 20
   unique_views = VisitReports::UniqueViewsByURL.new(visits: visits)
