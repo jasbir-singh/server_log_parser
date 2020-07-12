@@ -18,7 +18,7 @@ RSpec.describe ServerLogParser do
     end
 
     context 'when the file path is valid' do
-      let(:file_path) { './spec/fixtures/webserver1.log' }
+      let(:file_path) { './spec/fixtures/webserver_valid_10_entries.log' }
 
       it 'does not raise an error' do
         expect do
@@ -33,7 +33,7 @@ RSpec.describe ServerLogParser do
   end
 
   describe '.parse' do
-    let(:file_path) { './spec/fixtures/webserver_simple.log' }
+    let(:file_path) { './spec/fixtures/webserver_valid_1_entry.log' }
 
     context 'when the file is valid' do
       it 'parses and then adds the visits' do
