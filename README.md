@@ -62,10 +62,11 @@ outputs
 - `Visits` - This class encapsulates the logic for all of the visits.
 - `VisitReports` - Enacapsulates the base logic for creating a report. `UniqueViewsByURL`, and `ToralViewsByURL` are examples of concrete reports that compose with `VisitReports`.
 	of reports, which compose with this class to create a report. This design should make it simple to add new reports. (PS: I have also deliberately picked composition over inheritance)
-- `ServerLogLineParser` - Enacapsulates logic for parsing each line.
+- `ServerLogLineParser` - Enacapsulates logic for parsing each line (performs url validation, and makes sure each line is valid).
 
 # What I would improve? (TODOs)
 
 - Add unit tests for `Parser`, however, it's pretty well covered by integration specs.
 - Test the logic on a bigger subset, and measure the performance of `File.readlines`, and see if it handles it well (it should).
 - Possibly, check if IP addresses are valid. However, log file would only ever contain valid ip addresses I imagine.
+- Add more specs covering more edge cases (i.e. `/home/` and `/home` should be the same?)
