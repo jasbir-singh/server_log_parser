@@ -1,15 +1,17 @@
 # frozen_string_literal: true
 
+require 'logger'
 require './lib/server_log_parser'
 
 RSpec.describe ServerLogParser do
   let(:visits) { Visits.new }
-  subject { ServerLogParser.new(file_path: file_path, visits: visits) }
+  let(:logger_mock) { double('Logger', warn: '') }
+  subject { ServerLogParser.new(file_path: file_path, visits: visits, logger: logger_mock) }
 
   describe 'constructor' do
     let(:file_path) { 'non_exisitent_file_path' }
 
-    context 'file is non-existent' do
+    context 'when the file does not exist' do
       it 'returns the error if the file does not exist' do
         expect do
           subject
@@ -33,11 +35,21 @@ RSpec.describe ServerLogParser do
   end
 
   describe '.parse' do
-    let(:file_path) { './spec/fixtures/webserver_valid_1_entry.log' }
-
     context 'when the file is valid' do
+      let(:file_path) { './spec/fixtures/webserver_valid_1_entry.log' }
+
       it 'parses and then adds the visits' do
         expect(visits).to receive(:add).with(url: '/about', ip_address: '802.683.925.780')
+
+        subject.parse
+      end
+    end
+
+    context 'when the file is invalid' do
+      let(:file_path) { './spec/fixtures/webserver_invalid.log' }
+
+      it 'logs the error' do
+        expect(logger_mock).to receive(:warn).with(/Invalid log line/)
 
         subject.parse
       end

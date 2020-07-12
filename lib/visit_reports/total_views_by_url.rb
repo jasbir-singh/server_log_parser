@@ -1,3 +1,7 @@
+# frozen_string_literal: true
+
+require_relative '../visit_reports'
+
 module VisitReports
   class TotalViewsByURL
     include VisitReports
@@ -11,7 +15,6 @@ module VisitReports
         ]
       end.to_h
     end
-
 
     def suffix
       'total views'

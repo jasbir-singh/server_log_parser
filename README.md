@@ -25,8 +25,6 @@ b. Returns the following:
 ...
 ```
 
-
-
 # Solution
 
 Running this
@@ -42,16 +40,18 @@ outputs
 /help_page/1 23 unique views
 /contact 23 unique views
 /home 23 unique views
-/about/2 22 unique views
 /index 23 unique views
+/about/2 22 unique views
 /about 21 unique views
 --------------------
-/help_page/1 80 total views
-/contact 89 total views
-/home 78 total views
+--------------------
 /about/2 90 total views
+/contact 89 total views
 /index 82 total views
 /about 81 total views
+/help_page/1 80 total views
+/home 78 total views
+--------------------
 ```
 
 # Design
@@ -60,7 +60,12 @@ outputs
 
 - `ServerLogParser` - Handles the logic for parsing the file.
 - `Visits` - This class encapsulates the logic for all of the visits.
-- `VisitReports` - Enacapsulates the base logic for creating a report.
+- `VisitReports` - Enacapsulates the base logic for creating a report. `UniqueViewsByURL`, and `ToralViewsByURL` are examples of concrete reports that compose with `VisitReports`.
+	of reports, which compose with this class to create a report. This design should make it simple to add new reports. (PS: I have also deliberately picked composition over inheritance)
 - `ServerLogLineParser` - Enacapsulates logic for parsing each line.
 
-# TODOs
+# What I would improve? (TODOs)
+
+- Add unit tests for `Parser`, however, it's pretty well covered by integration specs.
+- Test the logic on a bigger subset, and measure the performance of `File.readlines`, and see if it handles it well (it should).
+- Possibly, check if IP addresses are valid. However, log file would only ever contain valid ip addresses I imagine.

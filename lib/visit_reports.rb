@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module VisitReports
   attr_reader :visits
 
@@ -6,7 +8,7 @@ module VisitReports
   end
 
   def generated_data
-    @generated_data ||= generate
+    @generated_data ||= generate.sort_by { |k, v| - v }.to_h
   end
 
   def to_s

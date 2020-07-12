@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require 'pry'
 require './lib/visits'
 
 RSpec.describe Visits do
